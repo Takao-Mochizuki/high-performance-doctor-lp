@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ハイパフォーマンスドクタープログラム | 崩れても、戻れる。それが一流の条件。</title>
+<meta name="description" content="元U-20サッカー日本代表チームドクターによる、経営者専属の完全伴走型パフォーマンス最適化プログラム">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg-deep:#06060b;
+  --bg-primary:#0a0a12;
+  --bg-card:rgba(255,255,255,0.035);
+  --bg-card-hover:rgba(255,255,255,0.06);
+  --gold:#c9a54e;
+  --gold-light:#e4c96a;
+  --gold-dark:#a07d2e;
+  --teal:#4ecdc4;
+  --teal-dark:#2a9d8f;
+  --text-primary:#f0ede6;
+  --text-secondary:#8a8a9a;
+  --text-muted:#5a5a6a;
+  --font-display:'Shippori Mincho',serif;
+  --font-body:'Noto Sans JP',sans-serif;
+  --ease-out-expo:cubic-bezier(0.16,1,0.3,1);
+  --section-pad:clamp(80px,12vw,160px);
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{
+  font-family:var(--font-body);
+  background:var(--bg-deep);
+  color:var(--text-primary);
+  font-weight:400;
+  line-height:1.8;
+  overflow-x:hidden;
+  font-size:clamp(14px,1.1vw,17px);
+}
+
+/* Grain overlay */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:128px 128px;
+}
+
+/* Reveal animations */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.9s var(--ease-out-expo),transform 0.9s var(--ease-out-expo)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+.reveal-delay-5{transition-delay:.5s}
+
+/* Container */
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+.container-narrow{max-width:900px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+
+/* Section label */
+.section-label{
+  font-family:var(--font-body);font-size:.7rem;font-weight:500;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;
+}
+.section-label::before{content:'';width:32px;height:1px;background:var(--gold)}
+
+/* Section heading */
+.section-heading{
+  font-family:var(--font-display);
+  font-size:clamp(1.8rem,4vw,3.2rem);
+  font-weight:700;line-height:1.4;
+  margin-bottom:2rem;
+  letter-spacing:.02em;
+}
+
+/* Buttons */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:1rem 2.5rem;
+  font-family:var(--font-body);font-size:.95rem;font-weight:500;
+  color:var(--bg-deep);background:var(--gold);
+  border:none;border-radius:0;cursor:pointer;
+  text-decoration:none;
+  transition:all .4s var(--ease-out-expo);
+  position:relative;letter-spacing:.05em;
+}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,165,78,.25)}
+.btn-primary::after{content:'→';transition:transform .3s ease}
+.btn-primary:hover::after{transform:translateX(4px)}
+
+.btn-outline{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.9rem 2rem;
+  font-family:var(--font-body);font-size:.85rem;font-weight:500;
+  color:var(--gold);background:transparent;
+  border:1px solid rgba(201,165,78,.4);cursor:pointer;
+  text-decoration:none;
+  transition:all .4s var(--ease-out-expo);
+  letter-spacing:.05em;
+}
+.btn-outline:hover{border-color:var(--gold);background:rgba(201,165,78,.08)}
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero{
+  position:relative;min-height:100vh;min-height:100dvh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+  padding:clamp(100px,15vh,160px) 0;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 40%,rgba(201,165,78,.08) 0%,transparent 70%),
+    radial-gradient(ellipse 80% 60% at 30% 60%,rgba(78,205,196,.04) 0%,transparent 60%),
+    linear-gradient(180deg,#08080e 0%,#0c0c16 40%,#0a0a10 100%);
+}
+
+/* Floating shapes */
+.hero-shapes{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.hero-shape{
+  position:absolute;border:1px solid rgba(201,165,78,.1);
+  animation:float-shape 20s ease-in-out infinite;
+}
+.hero-shape:nth-child(1){width:300px;height:300px;border-radius:50%;top:10%;left:-5%;animation-delay:0s;animation-duration:25s}
+.hero-shape:nth-child(2){width:200px;height:200px;top:60%;right:-3%;animation-delay:-5s;animation-duration:20s;border-color:rgba(78,205,196,.08)}
+.hero-shape:nth-child(3){width:150px;height:150px;border-radius:50%;top:20%;right:15%;animation-delay:-10s;animation-duration:30s}
+.hero-shape:nth-child(4){width:80px;height:80px;bottom:20%;left:20%;animation-delay:-7s;animation-duration:22s;border-color:rgba(78,205,196,.06)}
+.hero-shape:nth-child(5){width:400px;height:400px;border-radius:50%;top:30%;left:40%;animation-delay:-12s;animation-duration:35s;border-color:rgba(201,165,78,.04)}
+
+@keyframes float-shape{
+  0%,100%{transform:translate(0,0) rotate(0deg)}
+  25%{transform:translate(20px,-30px) rotate(5deg)}
+  50%{transform:translate(-10px,20px) rotate(-3deg)}
+  75%{transform:translate(15px,10px) rotate(2deg)}
+}
+
+/* Decorative kanji */
+.hero-kanji{
+  position:absolute;
+  font-family:var(--font-display);font-size:clamp(15rem,25vw,30rem);
+  font-weight:800;color:rgba(201,165,78,.018);
+  pointer-events:none;user-select:none;
+  line-height:1;
+}
+.hero-kanji-1{top:-5%;right:-5%}
+.hero-kanji-2{bottom:-10%;left:-8%;color:rgba(78,205,196,.015)}
+
+.hero-content{position:relative;z-index:2;text-align:center;max-width:900px;padding:0 clamp(20px,5vw,40px)}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.6rem;
+  padding:.5rem 1.2rem;
+  border:1px solid rgba(201,165,78,.25);
+  font-size:.72rem;font-weight:500;letter-spacing:.15em;
+  color:var(--gold);margin-bottom:2.5rem;
+  background:rgba(201,165,78,.04);
+  backdrop-filter:blur(10px);
+}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+
+.hero h1{
+  font-family:var(--font-display);
+  font-size:clamp(2.2rem,5.5vw,4.2rem);
+  font-weight:800;line-height:1.35;
+  margin-bottom:1.8rem;
+  letter-spacing:.04em;
+}
+.hero h1 .gold{color:var(--gold)}
+.hero h1 .line{display:block}
+
+.hero-sub{
+  font-size:clamp(.85rem,1.3vw,1.05rem);
+  color:var(--text-secondary);line-height:2;
+  margin-bottom:3rem;font-weight:300;
+  max-width:680px;margin-left:auto;margin-right:auto;
+}
+
+.hero-cta-group{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+
+.hero-scroll{
+  position:absolute;bottom:clamp(20px,4vh,40px);left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  color:var(--text-muted);font-size:.65rem;letter-spacing:.2em;
+}
+.hero-scroll-line{width:1px;height:40px;background:linear-gradient(180deg,var(--gold),transparent);animation:scroll-line 2s ease-in-out infinite}
+@keyframes scroll-line{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ============================================
+   NAV (sticky, appears on scroll)
+   ============================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:.8rem 0;
+  background:rgba(6,6,11,.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.04);
+  transform:translateY(-100%);transition:transform .5s var(--ease-out-expo);
+}
+.nav.visible{transform:translateY(0)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,60px);display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:var(--font-display);font-size:.9rem;font-weight:700;color:var(--gold);letter-spacing:.05em}
+.nav-cta{
+  padding:.5rem 1.5rem;font-size:.75rem;font-weight:500;
+  color:var(--bg-deep);background:var(--gold);text-decoration:none;
+  transition:all .3s ease;letter-spacing:.05em;
+}
+.nav-cta:hover{background:var(--gold-light)}
+
+/* ============================================
+   STORY SECTION
+   ============================================ */
+.story{padding:var(--section-pad) 0;position:relative}
+.story-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);
+  align-items:center;
+}
+.story-visual{position:relative}
+.story-visual-frame{
+  aspect-ratio:4/5;position:relative;
+  background:linear-gradient(135deg,rgba(201,165,78,.06),rgba(78,205,196,.04));
+  overflow:hidden;
+}
+.story-visual-frame::before{
+  content:'回';position:absolute;
+  font-family:var(--font-display);font-size:clamp(10rem,18vw,16rem);
+  font-weight:800;color:rgba(201,165,78,.04);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  line-height:1;
+}
+.story-visual-accent{
+  position:absolute;bottom:-20px;right:-20px;width:60%;height:40%;
+  border:1px solid rgba(201,165,78,.15);
+}
+.story-visual-badge{
+  position:absolute;top:1.5rem;left:1.5rem;
+  background:rgba(6,6,11,.8);backdrop-filter:blur(10px);
+  padding:.6rem 1rem;
+  font-size:.7rem;font-weight:500;letter-spacing:.1em;color:var(--gold);
+  border:1px solid rgba(201,165,78,.2);
+}
+
+.story-text h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.5rem,3vw,2.4rem);
+  font-weight:700;line-height:1.5;
+  margin-bottom:2rem;
+}
+.story-text h2 .gold{color:var(--gold)}
+
+.story-text p{color:var(--text-secondary);margin-bottom:1.5rem;line-height:2}
+.story-text .highlight{
+  color:var(--text-primary);font-weight:500;
+  border-left:2px solid var(--gold);padding-left:1rem;
+  margin:2rem 0;
+}
+
+@media(max-width:768px){
+  .story-grid{grid-template-columns:1fr}
+  .story-visual{max-width:400px;margin:0 auto 2rem}
+}
+
+/* ============================================
+   PHILOSOPHY CARDS
+   ============================================ */
+.philosophy{padding:var(--section-pad) 0;position:relative}
+.philosophy::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,165,78,.15),transparent);
+}
+.philosophy-header{text-align:center;margin-bottom:clamp(40px,6vw,80px)}
+
+.philosophy-cards{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,28px);
+}
+.philosophy-card{
+  position:relative;padding:clamp(2rem,3vw,3rem);
+  background:var(--bg-card);
+  border:1px solid rgba(255,255,255,.05);
+  transition:all .5s var(--ease-out-expo);
+  overflow:hidden;
+}
+.philosophy-card:hover{
+  background:var(--bg-card-hover);
+  border-color:rgba(201,165,78,.15);
+  transform:translateY(-4px);
+}
+.philosophy-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .5s var(--ease-out-expo);
+}
+.philosophy-card:hover::before{transform:scaleX(1)}
+
+.philosophy-card-num{
+  font-family:var(--font-display);font-size:clamp(3rem,5vw,4.5rem);font-weight:800;
+  line-height:1;margin-bottom:1rem;
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  opacity:.5;
+}
+.philosophy-card:nth-child(2) .philosophy-card-num{
+  background:linear-gradient(135deg,var(--teal),var(--teal-dark));
+  -webkit-background-clip:text;background-clip:text;
+}
+.philosophy-card:nth-child(3) .philosophy-card-num{
+  background:linear-gradient(135deg,var(--gold-light),var(--teal));
+  -webkit-background-clip:text;background-clip:text;
+}
+
+.philosophy-card h3{
+  font-family:var(--font-display);font-size:clamp(1.3rem,2vw,1.8rem);
+  font-weight:700;margin-bottom:.3rem;
+}
+.philosophy-card .en{
+  font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.2rem;display:block;
+}
+.philosophy-card p{color:var(--text-secondary);font-size:.9rem;line-height:1.9}
+
+@media(max-width:768px){
+  .philosophy-cards{grid-template-columns:1fr}
+}
+
+/* ============================================
+   PROBLEM SECTION
+   ============================================ */
+.problem{padding:var(--section-pad) 0;background:var(--bg-primary);position:relative}
+.problem::before,.problem::after{
+  content:'';position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);
+}
+.problem::before{top:0}
+.problem::after{bottom:0}
+
+.problem-header{text-align:center;margin-bottom:clamp(40px,6vw,60px)}
+
+.problem-chain{
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:0;
+  margin:clamp(2rem,4vw,4rem) 0;
+}
+.problem-chain-item{
+  padding:1rem 1.5rem;
+  background:var(--bg-card);
+  border:1px solid rgba(255,255,255,.06);
+  font-size:clamp(.8rem,1.1vw,.95rem);font-weight:500;
+  white-space:nowrap;
+  transition:all .4s ease;
+}
+.problem-chain-item:hover{border-color:rgba(201,165,78,.2);background:rgba(201,165,78,.04)}
+.problem-chain-arrow{
+  color:var(--gold);font-size:1.2rem;padding:0 .5rem;flex-shrink:0;
+}
+
+.problem-quotes{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:clamp(12px,2vw,20px);margin-top:clamp(2rem,4vw,4rem);
+}
+.problem-quote{
+  padding:clamp(1.2rem,2vw,1.8rem);
+  border-left:2px solid rgba(201,165,78,.2);
+  background:rgba(255,255,255,.015);
+}
+.problem-quote p{color:var(--text-secondary);font-size:.9rem;line-height:1.8}
+.problem-quote .em{color:var(--text-primary);font-weight:500}
+
+@media(max-width:600px){
+  .problem-chain{flex-direction:column;align-items:stretch}
+  .problem-chain-item{text-align:center}
+  .problem-chain-arrow{transform:rotate(90deg);text-align:center;padding:.3rem 0}
+}
+
+/* ============================================
+   BENTO GRID - PROGRAM CONTENT
+   ============================================ */
+.bento{padding:var(--section-pad) 0;position:relative}
+.bento-header{text-align:center;margin-bottom:clamp(40px,6vw,70px)}
+
+.bento-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:auto auto;
+  gap:clamp(12px,1.5vw,20px);
+}
+.bento-card{
+  position:relative;
+  padding:clamp(1.5rem,2.5vw,2.5rem);
+  background:var(--bg-card);
+  border:1px solid rgba(255,255,255,.04);
+  transition:all .5s var(--ease-out-expo);
+  overflow:hidden;
+}
+.bento-card:hover{
+  border-color:rgba(201,165,78,.12);
+  background:var(--bg-card-hover);
+}
+
+.bento-card-1{grid-column:1/3;grid-row:1/2}
+.bento-card-2{grid-column:3/5;grid-row:1/2}
+.bento-card-3{grid-column:1/3;grid-row:2/3}
+.bento-card-4{grid-column:3/5;grid-row:2/3}
+
+.bento-card-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;
+  font-family:var(--font-display);font-size:.9rem;font-weight:700;
+  border:1px solid rgba(201,165,78,.3);color:var(--gold);
+  margin-bottom:1.2rem;
+}
+.bento-card h3{
+  font-family:var(--font-display);font-size:clamp(1.2rem,1.8vw,1.6rem);
+  font-weight:700;margin-bottom:.4rem;
+}
+.bento-card .sub{
+  font-size:.8rem;color:var(--gold);margin-bottom:1rem;font-weight:500;
+}
+.bento-card p{color:var(--text-secondary);font-size:.85rem;line-height:1.9}
+.bento-card ul{list-style:none;margin-top:1rem}
+.bento-card ul li{
+  color:var(--text-secondary);font-size:.85rem;line-height:1.8;
+  padding-left:1.2rem;position:relative;
+}
+.bento-card ul li::before{
+  content:'';position:absolute;left:0;top:.7em;
+  width:5px;height:5px;border-radius:50%;
+  background:var(--gold);opacity:.5;
+}
+
+/* Decorative corner accent */
+.bento-card::after{
+  content:'';position:absolute;top:0;right:0;
+  width:60px;height:60px;
+  background:linear-gradient(225deg,rgba(201,165,78,.06),transparent);
+  pointer-events:none;
+}
+
+@media(max-width:768px){
+  .bento-grid{grid-template-columns:1fr;grid-template-rows:auto}
+  .bento-card-1,.bento-card-2,.bento-card-3,.bento-card-4{grid-column:1/-1;grid-row:auto}
+}
+
+/* ============================================
+   TIMELINE - INITIAL SESSION
+   ============================================ */
+.timeline-section{padding:var(--section-pad) 0;background:var(--bg-primary);position:relative}
+.timeline-section::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);
+}
+.timeline-header{text-align:center;margin-bottom:clamp(40px,6vw,70px)}
+
+.timeline{position:relative;max-width:700px;margin:0 auto}
+.timeline::before{
+  content:'';position:absolute;left:20px;top:0;bottom:0;width:1px;
+  background:linear-gradient(180deg,var(--gold),rgba(201,165,78,.1));
+}
+/* Pulse traveling down the line */
+.timeline::after{
+  content:'';position:absolute;left:17px;top:0;
+  width:7px;height:7px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 15px var(--gold);
+  animation:timeline-pulse 4s ease-in-out infinite;
+}
+@keyframes timeline-pulse{
+  0%{top:0;opacity:1}
+  100%{top:100%;opacity:0}
+}
+
+.timeline-item{
+  position:relative;padding-left:60px;padding-bottom:clamp(2.5rem,4vw,3.5rem);
+}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-item-dot{
+  position:absolute;left:13px;top:4px;
+  width:15px;height:15px;border-radius:50%;
+  border:2px solid var(--gold);background:var(--bg-primary);
+  z-index:1;
+}
+.timeline-item-num{
+  font-family:var(--font-display);font-size:.7rem;font-weight:700;
+  color:var(--gold);letter-spacing:.1em;margin-bottom:.4rem;
+}
+.timeline-item h3{
+  font-family:var(--font-display);font-size:clamp(1.1rem,1.5vw,1.35rem);
+  font-weight:700;margin-bottom:.6rem;
+}
+.timeline-item p{color:var(--text-secondary);font-size:.85rem;line-height:1.9}
+
+@media(max-width:480px){
+  .timeline::before{left:12px}
+  .timeline::after{left:9px}
+  .timeline-item{padding-left:44px}
+  .timeline-item-dot{left:5px}
+}
+
+/* ============================================
+   PROMISE
+   ============================================ */
+.promise{padding:var(--section-pad) 0;position:relative}
+.promise-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;
+}
+.promise-list{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.5rem)}
+.promise-item{
+  display:flex;align-items:flex-start;gap:1rem;
+  padding:1.2rem 1.5rem;
+  background:var(--bg-card);border:1px solid rgba(255,255,255,.04);
+  transition:all .4s ease;
+}
+.promise-item:hover{border-color:rgba(201,165,78,.12)}
+.promise-item-icon{
+  flex-shrink:0;width:32px;height:32px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:.9rem;
+  border:1px solid rgba(201,165,78,.2);
+}
+.promise-item p{font-size:.9rem;color:var(--text-secondary);line-height:1.7}
+.promise-item strong{color:var(--text-primary);font-weight:600}
+
+.promise-text h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.5rem,3vw,2.2rem);
+  font-weight:700;line-height:1.5;margin-bottom:1.5rem;
+}
+.promise-text p{color:var(--text-secondary);line-height:2;margin-bottom:1rem}
+.promise-text .emphasis{
+  font-family:var(--font-display);
+  font-size:clamp(1.1rem,1.8vw,1.5rem);
+  font-weight:700;color:var(--gold);
+  margin-top:1.5rem;line-height:1.6;
+}
+
+@media(max-width:768px){
+  .promise-inner{grid-template-columns:1fr}
+}
+
+/* ============================================
+   PRICING
+   ============================================ */
+.pricing{padding:var(--section-pad) 0;background:var(--bg-primary);position:relative}
+.pricing::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,165,78,.15),transparent);
+}
+.pricing-header{text-align:center;margin-bottom:clamp(40px,6vw,70px)}
+
+.pricing-cards{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(12px,2vw,24px);align-items:stretch;
+}
+.pricing-card{
+  position:relative;
+  padding:clamp(1.5rem,2.5vw,2.5rem);
+  background:rgba(255,255,255,.025);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;
+  transition:all .5s var(--ease-out-expo);
+}
+.pricing-card:hover{
+  border-color:rgba(201,165,78,.15);
+  transform:translateY(-4px);
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+.pricing-card.featured{
+  border-color:rgba(201,165,78,.25);
+  background:rgba(201,165,78,.04);
+}
+.pricing-card.featured::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-dark));
+}
+
+.pricing-badge{
+  position:absolute;top:-1px;right:1.5rem;
+  background:var(--gold);color:var(--bg-deep);
+  padding:.3rem .8rem;font-size:.6rem;font-weight:700;
+  letter-spacing:.1em;
+}
+
+.pricing-card h3{
+  font-family:var(--font-display);font-size:clamp(1.1rem,1.5vw,1.4rem);
+  font-weight:700;margin-bottom:.5rem;
+}
+.pricing-price{
+  font-family:var(--font-display);font-size:clamp(2rem,3vw,2.8rem);
+  font-weight:800;color:var(--gold);line-height:1.2;
+  margin-bottom:.3rem;
+}
+.pricing-price .yen{font-size:.5em;font-weight:500;vertical-align:super}
+.pricing-price .period{font-size:.35em;font-weight:400;color:var(--text-secondary)}
+.pricing-desc{color:var(--text-secondary);font-size:.85rem;line-height:1.8;margin-bottom:1.5rem}
+.pricing-features{list-style:none;margin-bottom:auto;padding-bottom:1.5rem}
+.pricing-features li{
+  font-size:.82rem;color:var(--text-secondary);line-height:1.7;
+  padding:.3rem 0 .3rem 1.3rem;position:relative;
+}
+.pricing-features li::before{
+  content:'';position:absolute;left:0;top:.65em;
+  width:6px;height:6px;
+  border:1px solid var(--gold);
+  opacity:.5;
+}
+.pricing-card .btn-primary,.pricing-card .btn-outline{
+  width:100%;justify-content:center;margin-top:1.5rem;
+}
+
+.pricing-note{text-align:center;color:var(--text-muted);font-size:.8rem;margin-top:2rem}
+
+@media(max-width:768px){
+  .pricing-cards{grid-template-columns:1fr;max-width:440px;margin:0 auto}
+}
+
+/* ============================================
+   TARGET
+   ============================================ */
+.target{padding:var(--section-pad) 0;position:relative}
+.target-header{text-align:center;margin-bottom:clamp(40px,6vw,60px)}
+
+.target-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,3vw,32px);
+  max-width:900px;margin:0 auto;
+}
+.target-card{
+  padding:clamp(1.5rem,2.5vw,2.5rem);
+  border:1px solid rgba(255,255,255,.05);
+  background:var(--bg-card);
+}
+.target-card h3{
+  font-family:var(--font-display);font-size:clamp(1.1rem,1.5vw,1.3rem);
+  font-weight:700;margin-bottom:1.2rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.target-card h3 .icon{color:var(--gold);font-size:1.1rem}
+.target-card.not-for h3 .icon{color:var(--text-muted)}
+.target-card ul{list-style:none}
+.target-card ul li{
+  font-size:.88rem;color:var(--text-secondary);line-height:1.8;
+  padding:.2rem 0 .2rem 1.5rem;position:relative;
+}
+.target-card ul li::before{
+  content:'◎';position:absolute;left:0;color:var(--gold);font-size:.7rem;top:.35em;
+}
+.target-card.not-for ul li::before{content:'×';color:var(--text-muted)}
+.target-card .note{margin-top:1rem;font-size:.82rem;color:var(--text-muted);font-style:italic}
+
+.target-limit{
+  text-align:center;margin-top:clamp(2rem,4vw,3rem);
+  padding:1.5rem;
+  border:1px solid rgba(201,165,78,.15);
+  background:rgba(201,165,78,.02);
+}
+.target-limit p{font-size:.9rem;color:var(--text-secondary)}
+.target-limit strong{color:var(--gold)}
+
+@media(max-width:600px){
+  .target-grid{grid-template-columns:1fr}
+}
+
+/* ============================================
+   PROFILE
+   ============================================ */
+.profile{padding:var(--section-pad) 0;background:var(--bg-primary);position:relative}
+.profile::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,165,78,.15),transparent);
+}
+
+.profile-inner{
+  display:grid;grid-template-columns:280px 1fr;
+  gap:clamp(40px,6vw,80px);align-items:start;
+  max-width:1000px;margin:0 auto;
+}
+.profile-photo{
+  aspect-ratio:3/4;
+  background:linear-gradient(135deg,rgba(201,165,78,.08),rgba(78,205,196,.04));
+  position:relative;
+}
+.profile-photo::after{
+  content:'';position:absolute;inset:8px;
+  border:1px solid rgba(201,165,78,.1);
+}
+.profile-photo-label{
+  position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);
+  background:var(--bg-primary);padding:.3rem 1.2rem;
+  font-size:.7rem;font-weight:500;letter-spacing:.1em;color:var(--gold);
+  border:1px solid rgba(201,165,78,.2);white-space:nowrap;
+}
+
+.profile-content h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.6rem,3vw,2.4rem);
+  font-weight:800;margin-bottom:.5rem;
+}
+.profile-content .title{
+  font-size:.8rem;color:var(--gold);font-weight:500;
+  letter-spacing:.1em;margin-bottom:2rem;
+  padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,.06);
+}
+.profile-content p{color:var(--text-secondary);line-height:2;margin-bottom:1rem;font-size:.9rem}
+.profile-content .credentials{
+  margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.06);
+}
+.profile-content .credentials li{
+  list-style:none;font-size:.82rem;color:var(--text-secondary);
+  padding:.3rem 0 .3rem 1.2rem;position:relative;line-height:1.7;
+}
+.profile-content .credentials li::before{
+  content:'—';position:absolute;left:0;color:var(--gold);
+}
+
+@media(max-width:768px){
+  .profile-inner{grid-template-columns:1fr;max-width:600px}
+  .profile-photo{max-width:240px;margin:0 auto 1rem}
+}
+
+/* ============================================
+   FINAL CTA
+   ============================================ */
+.final-cta{
+  padding:clamp(100px,15vw,180px) 0;
+  position:relative;text-align:center;
+  overflow:hidden;
+}
+.final-cta-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 50% 50% at 50% 50%,rgba(201,165,78,.06),transparent),
+    var(--bg-deep);
+}
+.final-cta-content{position:relative;z-index:1}
+.final-cta h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.8rem,4.5vw,3.5rem);
+  font-weight:800;line-height:1.4;
+  margin-bottom:1rem;
+}
+.final-cta h2 .gold{color:var(--gold)}
+.final-cta .sub{
+  color:var(--text-secondary);font-size:clamp(.85rem,1.2vw,1rem);
+  margin-bottom:2.5rem;line-height:1.9;max-width:600px;margin-left:auto;margin-right:auto;
+}
+.final-cta .name{
+  font-family:var(--font-display);
+  font-size:1rem;font-weight:700;color:var(--text-secondary);
+  margin-top:2.5rem;letter-spacing:.1em;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+footer{
+  padding:2rem 0;
+  border-top:1px solid rgba(255,255,255,.04);
+  text-align:center;
+}
+footer nav{margin-bottom:1rem}
+footer nav a{
+  color:var(--text-muted);font-size:.72rem;text-decoration:none;
+  margin:0 .8rem;transition:color .3s ease;letter-spacing:.05em;
+}
+footer nav a:hover{color:var(--text-secondary)}
+footer .copy{font-size:.65rem;color:var(--text-muted);letter-spacing:.05em}
+
+/* ============================================
+   BETWEEN-SECTION CTA
+   ============================================ */
+.section-cta{
+  text-align:center;padding:clamp(40px,6vw,60px) 0;
+}
+
+/* ============================================
+   EXTRAS: OPTION / SUPPORT SECTION
+   ============================================ */
+.support{padding:var(--section-pad) 0;position:relative}
+.support::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);
+}
+.support-inner{
+  max-width:800px;margin:0 auto;
+}
+.support-inner h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.4rem,2.5vw,2rem);
+  font-weight:700;margin-bottom:.4rem;
+}
+.support-inner .sub-h{
+  font-size:.85rem;color:var(--gold);margin-bottom:2rem;font-weight:500;
+}
+.support-inner p{color:var(--text-secondary);line-height:2;margin-bottom:1rem;font-size:.9rem}
+.support-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,20px);
+  margin:2rem 0;
+}
+.support-item{
+  padding:1.2rem 1.5rem;background:var(--bg-card);
+  border:1px solid rgba(255,255,255,.04);
+}
+.support-item p{margin:0;font-size:.85rem}
+.support-item strong{color:var(--text-primary)}
+
+@media(max-width:600px){
+  .support-grid{grid-template-columns:1fr}
+}
+
+/* ============================================
+   CLOSING SECTION (left arm)
+   ============================================ */
+.closing{
+  padding:clamp(60px,8vw,100px) 0;
+  text-align:center;
+}
+.closing p{
+  color:var(--text-secondary);line-height:2.2;
+  font-size:clamp(.9rem,1.1vw,1rem);
+  max-width:700px;margin:0 auto 1rem;
+}
+.closing .em{
+  font-family:var(--font-display);
+  font-size:clamp(1.1rem,1.8vw,1.5rem);
+  font-weight:700;color:var(--text-primary);
+  margin:1.5rem auto;
+}
+
+/* ============================================
+   GLOBAL RESPONSIVE TWEAKS
+   ============================================ */
+@media(max-width:480px){
+  :root{--section-pad:clamp(60px,10vw,100px)}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">HIGH PERFORMANCE DOCTOR</div>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdfVH6_fH7xOPAJ_XTGG1y7FxzTIQZm2f-tHe3K1Vbix5yPOg/viewform?usp=header" class="nav-cta" target="_blank" rel="noopener">無料説明会に申し込む</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-shapes">
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+    <div class="hero-shape"></div>
+  </div>
+  <div class="hero-kanji hero-kanji-1">復</div>
+  <div class="hero-kanji hero-kanji-2">流</div>
+
+  <div class="hero-content">
+    <div class="hero-badge reveal">
+      <span class="hero-badge-dot"></span>
+      元 U-20 サッカー日本代表 チームドクター
+    </div>
+    <h1 class="reveal reveal-delay-1">
+      <span class="line">崩れても、<span class="gold">戻れる。</span></span>
+      <span class="line">それが一流の条件。</span>
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      元U-20サッカー日本代表チームドクターが辿り着いた、<br>
+      経営者のためのパフォーマンス最適化プログラム
+    </p>
+    <div class="hero-cta-group reveal reveal-delay-3">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdfVH6_fH7xOPAJ_XTGG1y7FxzTIQZm2f-tHe3K1Vbix5yPOg/viewform?usp=header" class="btn-primary" target="_blank" rel="noopener">無料説明会に申し込む</a>
+      <a href="#program" class="btn-outline">プログラムを見る</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    SCROLL
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-visual reveal">
+        <div class="story-visual-frame">
+          <div class="story-visual-badge">U-20 JAPAN NATIONAL TEAM</div>
+        </div>
+        <div class="story-visual-accent"></div>
+      </div>
+      <div class="story-text">
+        <div class="section-label reveal">STORY</div>
+        <h2 class="reveal reveal-delay-1">
+          日本代表の現場で<br>
+          学んだ<span class="gold">たったひとつ</span>のこと
+        </h2>
+        <p class="reveal reveal-delay-2">
+          U-20サッカー日本代表のチームドクターとして、数多くのトップアスリートに伴走してきました。
+        </p>
+        <p class="reveal reveal-delay-2">
+          その現場で、常に結果を出し続ける選手と、才能がありながら伸び悩む選手の違いを、間近で見てきました。
+        </p>
+        <p class="reveal reveal-delay-3">
+          その差は、才能でも、練習量でも、根性でもありませんでした。
+        </p>
+        <p class="highlight reveal reveal-delay-3">
+          <strong>回復力</strong>——崩れた時に、いかに早く戻れるか。<br>
+          それだけでした。
+        </p>
+        <p class="reveal reveal-delay-4">
+          最強の選手は、調子を崩さない選手ではなく、<strong>崩れても最速で戻ってくる選手</strong>でした。
+        </p>
+        <p class="reveal reveal-delay-4">
+          この原則は、経営者にもそのまま当てはまります。今、その知見を経営の最前線に立つあなたに届けます。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy">
+  <div class="container">
+    <div class="philosophy-header">
+      <div class="section-label reveal" style="justify-content:center">CORE PHILOSOPHY</div>
+      <h2 class="section-heading reveal reveal-delay-1">このプログラムの核心</h2>
+    </div>
+    <div class="philosophy-cards">
+      <div class="philosophy-card reveal">
+        <div class="philosophy-card-num">01</div>
+        <h3>回復</h3>
+        <span class="en">Recovery</span>
+        <p>パフォーマンスの土台は、追い込むことではなく、<strong style="color:var(--text-primary)">戻る力</strong>にある。回復こそが、すべての出発点。</p>
+      </div>
+      <div class="philosophy-card reveal reveal-delay-1">
+        <div class="philosophy-card-num">02</div>
+        <h3>フロー</h3>
+        <span class="en">Flow</span>
+        <p>フロー状態に入ることが、結果を生む唯一の道。気合いではなく、<strong style="color:var(--text-primary)">科学的に</strong>。再現可能な方法で。</p>
+      </div>
+      <div class="philosophy-card reveal reveal-delay-2">
+        <div class="philosophy-card-num">03</div>
+        <h3>復帰</h3>
+        <span class="en">Return</span>
+        <p>フローから外れた時に、確実に戻れるメソッドを持つこと。<strong style="color:var(--text-primary)">これが一流の条件。</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem">
+  <div class="container">
+    <div class="problem-header">
+      <div class="section-label reveal" style="justify-content:center">THE PROBLEM</div>
+      <h2 class="section-heading reveal reveal-delay-1">経営者が抱える<br>見えない消耗</h2>
+    </div>
+
+    <div class="problem-chain reveal">
+      <div class="problem-chain-item">身体の不調</div>
+      <div class="problem-chain-arrow">→</div>
+      <div class="problem-chain-item">集中力の低下</div>
+      <div class="problem-chain-arrow">→</div>
+      <div class="problem-chain-item">判断の乱れ</div>
+      <div class="problem-chain-arrow">→</div>
+      <div class="problem-chain-item">結果とメンタルの消耗</div>
+    </div>
+
+    <div class="problem-quotes">
+      <div class="problem-quote reveal">
+        <p><span class="em">誰にも弱音を吐けない。</span><br>経営者は「結果を出す側」として、黙って進み続けるしかない。</p>
+      </div>
+      <div class="problem-quote reveal reveal-delay-1">
+        <p><span class="em">身体が重くても、判断が鈍っていても。</span><br>不安や迷いがあっても、立ち止まることは許されない。</p>
+      </div>
+      <div class="problem-quote reveal reveal-delay-2">
+        <p><span class="em">すべては連動している。</span><br>身体・メンタル・判断——切り分けられない一つの問題として扱う必要がある。</p>
+      </div>
+    </div>
+
+    <p class="reveal" style="text-align:center;color:var(--text-secondary);margin-top:clamp(2rem,4vw,3rem);font-size:.9rem;line-height:2">
+      このプログラムは、そんな経営者のための<br>
+      <strong style="color:var(--text-primary)">〝完全伴走型プログラム〟</strong>です。<br>
+      主治医・カウンセラー・ヒーラー・コーチ——<br>
+      これらすべてを、私一人が引き受けます。
+    </p>
+  </div>
+</section>
+
+<!-- BENTO - PROGRAM -->
+<section class="bento" id="program">
+  <div class="container">
+    <div class="bento-header">
+      <div class="section-label reveal" style="justify-content:center">PROGRAM</div>
+      <h2 class="section-heading reveal reveal-delay-1">このプログラムでやること</h2>
+      <p class="reveal reveal-delay-2" style="color:var(--text-secondary);max-width:600px;margin:0 auto;font-size:.9rem;line-height:2">
+        内容は最初から決まっていません。今の悩み・現在地・目標・生活リズム——<br>
+        すべてを聞いた上で、その人専用のプランを組みます。
+      </p>
+    </div>
+
+    <div class="bento-grid">
+      <div class="bento-card bento-card-1 reveal">
+        <div class="bento-card-num">1</div>
+        <h3>肉体改造</h3>
+        <div class="sub">パフォーマンスの土台をつくる</div>
+        <p>根性論ではなく、医学的視点と現実的な方法で整えます。生活と体質に合わせた完全オーダーメイド設計。続かない方法、効果がない方法は最初から採用しません。</p>
+        <ul>
+          <li>慢性的な痛みの改善</li>
+          <li>体力・柔軟性の向上</li>
+          <li>生活に組み込めるトレーニング</li>
+        </ul>
+      </div>
+      <div class="bento-card bento-card-2 reveal reveal-delay-1">
+        <div class="bento-card-num">2</div>
+        <h3>メンタル改造</h3>
+        <div class="sub">「鍛える」ではなく「整える」</div>
+        <p>経営者のメンタルは、強く見えて、実は消耗しています。メンタルを鍛える対象ではなく、整える対象として扱います。</p>
+        <ul>
+          <li>思考の癖の整理</li>
+          <li>感情の滞留の解放</li>
+          <li>揺れても戻れるメンタル構造の構築</li>
+        </ul>
+      </div>
+      <div class="bento-card bento-card-3 reveal reveal-delay-2">
+        <div class="bento-card-num">3</div>
+        <h3>フロー理論の応用</h3>
+        <div class="sub">フロー状態からゾーンへ</div>
+        <p>集中力は気合いで上げるものではありません。トップアスリートが使う「フロー理論」を土台に、科学的にアプローチします。</p>
+        <ul>
+          <li>フローに入れなくなる原因の特定</li>
+          <li>ノンフロー時の回復手順の確立</li>
+          <li>フローが安定する生活構造の設計</li>
+        </ul>
+      </div>
+      <div class="bento-card bento-card-4 reveal reveal-delay-3">
+        <div class="bento-card-num">4</div>
+        <h3>目標達成の伴走</h3>
+        <div class="sub">結果が出続ける状態をつくる</div>
+        <p>目標を気合いで追いかけさせません。結果が出やすい状態を保ったまま前に進むことを重視します。</p>
+        <ul>
+          <li>状態が整っているかの常時確認</li>
+          <li>判断のブレの検知と修正</li>
+          <li>最短でゴールに到達するコーチング</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section" id="session">
+  <div class="container-narrow">
+    <div class="timeline-header">
+      <div class="section-label reveal" style="justify-content:center">FIRST SESSION</div>
+      <h2 class="section-heading reveal reveal-delay-1">初回セッションの流れ</h2>
+      <p class="reveal reveal-delay-2" style="color:var(--text-secondary);font-size:.9rem;max-width:500px;margin:0 auto;line-height:2">
+        完全オーダーメイドですが、初回は以下の流れで進めます。
+      </p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-item-dot"></div>
+        <div class="timeline-item-num">STEP 01</div>
+        <h3>ゴールを2つに分けて定義する</h3>
+        <p>「結果ゴール」（売上・成果・到達点）と「状態ゴール」（集中・判断の冴え・エネルギー）。長期的な結果ゴールを言語化し、最も調子が良いときの状態を具体的に言葉にします。</p>
+      </div>
+      <div class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-item-dot"></div>
+        <div class="timeline-item-num">STEP 02</div>
+        <h3>なぜ「状態」が先なのかを理解する</h3>
+        <p>結果は、状態が乱れると再現しません。重要なのはフローに入ることではなく、ノンフロー（フローではない状態）に長く留まらないこと。一流の人が「土台（器）作り」を何よりも大事にしている理由を共有します。</p>
+      </div>
+      <div class="timeline-item reveal reveal-delay-2">
+        <div class="timeline-item-dot"></div>
+        <div class="timeline-item-num">STEP 03</div>
+        <h3>ノンフローの原因を特定する</h3>
+        <p>あなた固有のノンフローに入る条件を洗い出します。睡眠、生活習慣、情報の摂り方、人間関係、思考の癖——性格ではなく構造として整理し、最大のボトルネックから改善していきます。</p>
+      </div>
+      <div class="timeline-item reveal reveal-delay-3">
+        <div class="timeline-item-dot"></div>
+        <div class="timeline-item-num">STEP 04</div>
+        <h3>リカバリーメソッドを設計する</h3>
+        <p>ノンフローに入ったときの回復手順を具体的に決めます。初期サイン・やらないこと・戻るための行動。疲れている時でもできるか、毎回再現できるか——それだけを基準に設計します。</p>
+      </div>
+      <div class="timeline-item reveal reveal-delay-4">
+        <div class="timeline-item-dot"></div>
+        <div class="timeline-item-num">STEP 05</div>
+        <h3>1ヶ月の実践方針を共有する</h3>
+        <p>フローに入ろうとしない。成果を追い過ぎない。ノンフローに気づいたら戻る。初回のゴールは「何をするか」ではなく、「どう戻るかが分かっている状態」をつくることです。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMISE -->
+<section class="promise">
+  <div class="container">
+    <div class="promise-inner">
+      <div class="promise-list">
+        <div class="section-label reveal">PROMISE</div>
+        <div class="promise-item reveal reveal-delay-1">
+          <div class="promise-item-icon">✓</div>
+          <p><strong>秘密厳守</strong><br>ここで話したことは、外に出ません。プログラムを受けている事実すら、口外しません。</p>
+        </div>
+        <div class="promise-item reveal reveal-delay-2">
+          <div class="promise-item-icon">✓</div>
+          <p><strong>評価しない</strong><br>何を言っても、人間性を否定したりすることはありません。</p>
+        </div>
+        <div class="promise-item reveal reveal-delay-3">
+          <div class="promise-item-icon">✓</div>
+          <p><strong>否定しない</strong><br>「こんなこと言って大丈夫かな」と思う必要はありません。</p>
+        </div>
+        <div class="promise-item reveal reveal-delay-4">
+          <div class="promise-item-icon">✓</div>
+          <p><strong>無理な強制をしない</strong><br>続かない方法は、最初から採用しません。</p>
+        </div>
+      </div>
+      <div class="promise-text">
+        <h2 class="reveal">このプログラムの<br>約束</h2>
+        <p class="reveal reveal-delay-1">
+          経営者は「人には言えない悩み」を抱えていることが多いです。だいたい、みんな同じようなことで悩んでいます。
+        </p>
+        <p class="reveal reveal-delay-2">
+          一流の結果を出すことができる人間の共通点は、「コーチとの信頼関係がある」ということ。このプログラムは「信頼関係」を何よりも大事にします。
+        </p>
+        <p class="emphasis reveal reveal-delay-3">
+          安心して本音を出せる場所。<br>
+          それこそが、パフォーマンス回復の土台です。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="pricing-header">
+      <div class="section-label reveal" style="justify-content:center">PLAN</div>
+      <h2 class="section-heading reveal reveal-delay-1">プラン紹介</h2>
+    </div>
+
+    <div class="pricing-cards">
+      <div class="pricing-card reveal">
+        <h3>ライトプラン</h3>
+        <div class="pricing-price"><span class="yen">¥</span>50,000<span class="period">/月</span></div>
+        <p class="pricing-desc">方向性を整えたい人向け。</p>
+        <ul class="pricing-features">
+          <li>月1回 Zoom セッション（90分）</li>
+          <li>身体・メンタル・生活習慣の方向性設計</li>
+          <li>1ヶ月の行動プラン策定</li>
+          <li>主治医としての相談対応</li>
+        </ul>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdfVH6_fH7xOPAJ_XTGG1y7FxzTIQZm2f-tHe3K1Vbix5yPOg/viewform?usp=header" class="btn-outline" target="_blank" rel="noopener">申し込む</a>
+      </div>
+      <div class="pricing-card featured reveal reveal-delay-1">
+        <div class="pricing-badge">RECOMMENDED</div>
+        <h3>スタンダードプラン</h3>
+        <div class="pricing-price"><span class="yen">¥</span>100,000<span class="period">/月</span></div>
+        <p class="pricing-desc">日々の微調整を重ねたい人向け。</p>
+        <ul class="pricing-features">
+          <li>月1回 Zoom セッション（2時間）</li>
+          <li>毎日の状態報告＋フィードバック</li>
+          <li>やり過ぎ・判断のズレの即時修正</li>
+          <li>主治医としての相談対応</li>
+        </ul>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdfVH6_fH7xOPAJ_XTGG1y7FxzTIQZm2f-tHe3K1Vbix5yPOg/viewform?usp=header" class="btn-primary" target="_blank" rel="noopener">申し込む</a>
+      </div>
+      <div class="pricing-card reveal reveal-delay-2">
+        <h3>エグゼクティブプラン</h3>
+        <div class="pricing-price"><span class="yen">¥</span>200,000<span class="period">/月</span></div>
+        <p class="pricing-desc">経営と人生を根本から整えたい人向け。</p>
+        <ul class="pricing-features">
+          <li>完全伴走・頻繁なやり取り</li>
+          <li>毎日の状態把握＋即時フィードバック</li>
+          <li>習慣・身体・メンタルの総合管理</li>
+          <li>重要な意思決定前の相談</li>
+          <li>生活全体の再設計</li>
+        </ul>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdfVH6_fH7xOPAJ_XTGG1y7FxzTIQZm2f-tHe3K1Vbix5yPOg/viewform?usp=header" class="btn-outline" target="_blank" rel="noopener">申し込む</a>
+      </div>
+    </div>
+
+    <p class="pricing-note reveal">※いずれのプランも、基本的には「1年間」を1つの目安にしています。継続も可能です。</p>
+  </div>
+</section>
+
+<!-- SUPPORT -->
+<section class="support">
+  <div class="container">
+    <div class="support-inner">
+      <div class="section-label reveal">OPTION</div>
+      <h2 class="reveal reveal-delay-1">全コース共通オプション</h2>
+      <div class="sub-h reveal reveal-delay-1">主治医としての長期サポート</div>
+      <p class="reveal reveal-delay-2">
+        いずれのコースも共通で、「主治医」として、いざという時にいつでも身体の相談に乗ります。不調を感じた時、違和感が出た時、判断に迷う時——小さなことでも、そのまま放置しないでください。
+      </p>
+      <div class="support-grid">
+        <div class="support-item reveal">
+          <p><strong>専用カルテの作成</strong><br>指定医療施設で検査を受けていただき、数値・体質・既往・生活背景を踏まえた一貫管理を行います。</p>
+        </div>
+        <div class="support-item reveal reveal-delay-1">
+          <p><strong>西洋医学 × 東洋医学</strong><br>アーユルヴェーダなど東洋医学の見地からもアドバイス。食事、生活リズム、身体の使い方を一緒に考えます。</p>
+        </div>
+        <div class="support-item reveal reveal-delay-2">
+          <p><strong>出張対応</strong><br>交通費等をいただけたら、私が出張して直接視ることも可能です（場所によって応相談）。</p>
+        </div>
+        <div class="support-item reveal reveal-delay-3">
+          <p><strong>カスタマイズ対応</strong><br>内容と予算に応じて、追加のサービスをオーダーメイドで設計します。</p>
+        </div>
+      </div>
+      <p class="reveal" style="margin-top:1rem">
+        このプログラムで目指しているのは「一時的な改善」ではありません。あなたの身体を誰よりも理解し、長期的に守り続けること。経営者にとって、身体は〝最大の資産〟です。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- TARGET -->
+<section class="target">
+  <div class="container">
+    <div class="target-header">
+      <div class="section-label reveal" style="justify-content:center">FOR YOU?</div>
+      <h2 class="section-heading reveal reveal-delay-1">このプログラムが<br>向いている人</h2>
+    </div>
+
+    <div class="target-grid">
+      <div class="target-card reveal">
+        <h3><span class="icon">◎</span> 向いている人</h3>
+        <ul>
+          <li>体を壊しがちで整えたい</li>
+          <li>結果は出しているが、消耗している</li>
+          <li>身体や集中力に違和感がある</li>
+          <li>一人で抱え込む癖がある</li>
+          <li>本気でパフォーマンスを上げたい</li>
+          <li>自己投資を惜しみたくない</li>
+        </ul>
+      </div>
+      <div class="target-card not-for reveal reveal-delay-1">
+        <h3><span class="icon">×</span> 向いていない人</h3>
+        <ul>
+          <li>楽をしたい人</li>
+          <li>丸投げしたい人</li>
+          <li>変わる覚悟のない人</li>
+        </ul>
+        <p class="note">このプログラムは「本気で突き抜けた結果を出したい人」のためのものです。</p>
+      </div>
+    </div>
+
+    <div class="target-limit reveal">
+      <p>各プランは<strong>人数制限</strong>を設けています。人数が埋まり次第、募集終了いたします。</p>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING (LEFT ARM) -->
+<section class="closing">
+  <div class="container-narrow">
+    <p class="reveal">
+      私は、本気で世の中を良くしたい人、業界を変えたいと思っている人——<br>
+      そんな高い志を持った方を、本気で応援していきたいと思っています。
+    </p>
+    <p class="em reveal reveal-delay-1">
+      あなたの「右腕」が実務を守るなら、<br>
+      私はあなたの体調とメンタルを裏から支える「左腕」になります。
+    </p>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section class="profile" id="profile">
+  <div class="container">
+    <div class="profile-inner">
+      <div class="profile-photo reveal">
+        <div class="profile-photo-label">TEAM DOCTOR / COACH</div>
+      </div>
+      <div class="profile-content">
+        <div class="section-label reveal">PROFILE</div>
+        <h2 class="reveal reveal-delay-1">梶原将也</h2>
+        <div class="title reveal reveal-delay-1">元 U-20 サッカー日本代表 チームドクター</div>
+        <p class="reveal reveal-delay-2">
+          元U-20サッカー日本代表チームドクター。数多くのトップアスリートに伴走し、身体のコンディション管理からパフォーマンス最大化までを現場で支える。
+        </p>
+        <p class="reveal reveal-delay-3">
+          その経験を通して、結果を出し続けるための身体・メンタル・判断力を切り分けずに扱うためのロジックを体系化。現在はその知見を、経営者を中心としたビジネスの現場に応用。
+        </p>
+        <p class="reveal reveal-delay-3">
+          西洋医学と東洋医学の両面から、その人に合ったコンディションを設計。単に鍛えるのではなく、壊れない状態をつくり、高い出力を自然に出し続けられること——その主治医であり、伴走者。
+        </p>
+        <ul class="credentials reveal reveal-delay-4">
+          <li>肉体改造・コンディション設計</li>
+          <li>メンタルの安定・フローからゾーンへの移行</li>
+          <li>西洋医学 × 東洋医学の統合アプローチ</li>
+          <li>重要な意思決定の質の向上支援</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA: CONSULTATION -->
+<section class="section-cta" style="background:var(--bg-primary);padding:clamp(40px,6vw,60px) 0">
+  <div class="container" style="text-align:center">
+    <p class="reveal" style="color:var(--text-secondary);margin-bottom:1rem;font-size:.9rem;line-height:2">
+      どのプランか迷ったら、まずは無料説明会にお越しください。<br>
+      直接ご説明させていただいた上で、決めていただけたらと思います。
+    </p>
+    <p class="reveal reveal-delay-1" style="color:var(--text-muted);font-size:.8rem;margin-bottom:2rem">
+      ※実際にお話しした上で、このプログラムに合わないと判断した場合はお断りさせていただく場合もあります。
+    </p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdfVH6_fH7xOPAJ_XTGG1y7FxzTIQZm2f-tHe3K1Vbix5yPOg/viewform?usp=header" class="btn-primary reveal reveal-delay-2" target="_blank" rel="noopener">無料説明会に申し込む</a>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="contact">
+  <div class="final-cta-bg"></div>
+  <div class="final-cta-content">
+    <h2 class="reveal">
+      崩れても、<span class="gold">戻れる</span>自分をつくる。
+    </h2>
+    <p class="sub reveal reveal-delay-1">
+      このプログラムで最初に手に入れてほしいのは、やる気でもノウハウでもありません。<br>
+      崩れても、必ず戻れる感覚です。<br>
+      その土台が固まったら、もう迷うことはありません。
+    </p>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdfVH6_fH7xOPAJ_XTGG1y7FxzTIQZm2f-tHe3K1Vbix5yPOg/viewform?usp=header" class="btn-primary reveal reveal-delay-2" target="_blank" rel="noopener">無料説明会に申し込む</a>
+    <div class="name reveal reveal-delay-3">梶原将也</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <nav>
+    <a href="#">プライバシーポリシー</a>
+    <a href="#">特定商取引法に基づく表記</a>
+    <a href="#">お問い合わせ</a>
+  </nav>
+  <p class="copy">&copy; 2025 ハイパフォーマンスドクタープログラム</p>
+</footer>
+
+<script>
+// Scroll reveal
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// Sticky nav
+const nav = document.getElementById('nav');
+let lastScroll = 0;
+const heroHeight = document.querySelector('.hero').offsetHeight;
+
+window.addEventListener('scroll', () => {
+  const currentScroll = window.pageYOffset;
+  if (currentScroll > heroHeight * 0.6) {
+    nav.classList.add('visible');
+  } else {
+    nav.classList.remove('visible');
+  }
+  lastScroll = currentScroll;
+}, { passive: true });
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (href === '#') return;
+    e.preventDefault();
+    const target = document.querySelector(href);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
